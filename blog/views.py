@@ -1,5 +1,6 @@
-from .models import Post
-from .forms import PostForm
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Post, Comment
+from .forms import PostForm, CommentForm
 from django.http import Http404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -42,3 +43,20 @@ class PostDeleteView(DeleteView):
     model = Post
     template_name = 'blog/deleta_post.html'
     success_url = reverse_lazy('lista_posts')
+
+
+def post_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.autor = request.user
+            comment.save()
+            return redirect('detalha_post', pk=post.id)
+    else:
+        form = CommentForm()
+
+    return render(request, 'blog/detalha_post.html', {'post': post, 'form': form})

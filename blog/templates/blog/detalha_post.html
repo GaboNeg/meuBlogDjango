@@ -8,6 +8,32 @@
     <div>
         <p>{{ post.conteudo|safe }}</p>
     </div>
+
+    <h3>Comentários:</h3>
+    {% if post.comentarios.count %}
+        <ul>
+            {% for comentario in post.comentarios.all %}
+                <li>
+                    <strong>{{ comentario.autor.username }}:</strong>
+                    <p>{{ comentario.texto }}</p>
+                    <p><em>Postado em: {{ comentario.data_postagem|date:"d/m/Y H:i" }}</em></p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Este post ainda não tem comentários.</p>
+    {% endif %}
+
+    <h4>Deixe um comentário:</h4>
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'post_comment' post.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Postar Comentário</button>
+        </form>
+    {% else %}
+        <p>Você precisa estar logado para comentar.</p>
+    {% endif %}
     
     <a href="{% url 'edita_post' post.id %}">Editar</a> |
     <a href="{% url 'deleta_post' post.id %}">Deletar</a> |
