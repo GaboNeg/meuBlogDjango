@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.titulo }}{% endblock %}
+
+{% block content %}
+    <h2>{{ post.titulo }}</h2>
+    <p><em>Postado em: {{ post.data_postagem|date:"d/m/Y H:i" }}</em></p>
+    <div>
+        <p>{{ post.conteudo|safe }}</p>
+    </div>
+    
+    <a href="{% url 'edita_post' post.id %}">Editar</a> |
+    <a href="{% url 'deleta_post' post.id %}">Deletar</a> |
+    <a href="{% url 'lista_posts' %}">Voltar para a lista de posts</a>
+{% endblock %}
+
