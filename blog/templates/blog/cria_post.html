@@ -8,16 +8,8 @@
     <form method="post">
         {% csrf_token %}
         
-        <div>
-            <label for="titulo">Título:</label>
-            <input type="text" id="titulo" name="titulo" required>
-        </div>
+        {{ form.as_p }}
         
-        <div>
-            <label for="conteudo">Conteúdo:</label>
-            <textarea id="conteudo" name="conteudo" required></textarea>
-        </div>
-
         <button type="submit">Salvar Post</button>
     </form>
 
