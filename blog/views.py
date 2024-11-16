@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Comment
-from .forms import PostForm, CommentForm
+from .models import *
+from .forms import *
 from django.http import Http404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -60,3 +60,14 @@ def post_comment(request, post_id):
         form = CommentForm()
 
     return render(request, 'blog/detalha_post.html', {'post': post, 'form': form})
+
+
+def lista_categorias(request):
+    categorias = Category.objects.all()  # Pega todas as categorias
+    return render(request, 'blog/lista_categorias.html', {'categorias': categorias})
+
+
+def categoria_detalhada(request, pk):
+    categoria = get_object_or_404(Category, pk=pk)  # Obtem a categoria, retorna 404 se não encontrar
+    posts = categoria.posts.all()  # Recupera todos os posts que pertencem à categoria
+    return render(request, 'blog/categoria_detalhada.html', {'categoria': categoria, 'posts': posts})

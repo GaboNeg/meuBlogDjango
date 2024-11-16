@@ -1,10 +1,13 @@
 from django import forms
-from .models import Post, Comment
+from .models import *
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['titulo', 'conteudo']
+        fields = ['titulo', 'conteudo', 'categorias']
+        widgets = {
+            'categorias': forms.CheckboxSelectMultiple(),
+        }
 
 class CommentForm(forms.ModelForm):
     class Meta:

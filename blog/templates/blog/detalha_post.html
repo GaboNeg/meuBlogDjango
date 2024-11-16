@@ -5,6 +5,13 @@
 {% block content %}
     <h2>{{ post.titulo }}</h2>
     <p><em>Postado em: {{ post.data_postagem|date:"d/m/Y H:i" }}</em></p>
+    <h3>Categorias:</h3>
+        <ul>
+            {% for categoria in post.categorias.all %}
+                <li><a href="{% url 'categoria_detalhada' categoria.pk %}">{{ categoria.nome }}</a></li> <!-- Link para cada categoria -->
+            {% endfor %}
+        </ul>
+    
     <div>
         <p>{{ post.conteudo|safe }}</p>
     </div>

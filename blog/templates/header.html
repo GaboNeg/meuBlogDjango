@@ -2,7 +2,8 @@
     <h1>Bem-vindo ao Meu Blog</h1>
     <nav>
         <a href="{% url 'lista_posts' %}">Lista de Posts</a> |
-        <a href="{% url 'cria_post' %}">Criar Post</a>
+        <a href="{% url 'cria_post' %}">Criar Post</a>|
+        <a href="{% url 'lista_categorias' %}">Categorias</a>  
 
         {% if user.is_authenticated %}
             | <span>Logado como {{ user.username }}</span>
